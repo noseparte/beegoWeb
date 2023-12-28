@@ -1,2 +1,5 @@
 # 指定 .go 文件使用 Go 语言
 *.go linguist-language=Go
+*.js linguist-language=java
+*.css linguist-language=java
+*.html linguist-language=java
