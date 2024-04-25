@@ -1,0 +1,1 @@
+D:\go-repo\beegoWeb/views/gm/edit.tpl

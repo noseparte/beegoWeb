@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-left: 1px solid #888;
+            border-top: 1px solid #888;
+            background: #efefef;
+        }
+
+        th, td {
+            border-right: 1px solid #888;
+            border-bottom: 1px solid #888;
+            padding: 5px 15px;
+        }
+
+        th {
+            font-weight: bold;
+            background: #ccc;
+        }
+
+        .back {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<h2>GM 命令</h2>
+<table border="1">
+    <tr>
+        <td>
+            <span style="color:#F00"><b>增加资源</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form id="gm" method="get" action="http://{{.HTTPSERVER}}/gm/GMScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="26" hidden="hidden"></input>
+                    资源类型:<select name="type">
+                    <option value="1">金币[1]</option>
+                    <option value="2">食物[2]</option>
+                    <option value="5">增加钻石[5]</option>
+                </select>
+                    值:<input type="text" name="val" value="100000"></input>
+                    <input type="submit" value="确定" onsubmit="return false"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>增加道具</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form method="get" action="http://{{.HTTPSERVER}}/gm/GMScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="101" hidden="hidden"></input>
+                    物品ID:<input type="text" name="itemId" value=""></input>
+                    数量:<input type="text" name="val" value=""></input>
+                    <input type="submit" value="确定"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>自定义命令</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form method="get" action="http://{{.HTTPSERVER}}/gm/GMScript">
+                    uid:<input type="text" name="uid"></input>
+                    cmd:<input type="text" name="cmd" value=""></input>
+                    param1:<input type="text" name="param1" value=""></input>
+                    param2:<input type="text" name="param2" value=""></input>
+                    param3:<input type="text" name="param3" value=""></input>
+                    param4:<input type="text" name="param4" value=""></input>
+                    <input type="submit" value="确定"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>增减体力</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form method="get" action="http://{{.HTTPSERVER}}/gm/GMOtherScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="addAP" hidden="hidden"></input>
+                    数量:<input type="text" name="val" value=""></input>
+                    <input type="submit" value="确定"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>资源日志</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form method="get" action="http://{{.HTTPSERVER}}/gm/GMOtherScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="resourceRecord" hidden="hidden"></input>
+                    <input type="submit" value="确定"/>
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>玩家数据</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form id="user" method="get" action="http://{{.HTTPSERVER}}/gm/GMOtherScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="getUserProfile" hidden="hidden"></input>
+                    <input type="submit" value="确定" />
+                </form>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <span style="color:#F00"><b>玩家基础数据</b></span>
+        </td>
+        <td valign="middle">
+            <div>
+                <form id="baseInfo" method="get" action="http://{{.HTTPSERVER}}/gm/GMOtherScript">
+                    uid:<input type="text" name="uid"></input>
+                    <input type="text" name="cmd" value="baseInfo" hidden="hidden"></input>
+                    <input type="submit" value="确定" />
+                </form>
+            </div>
+        </td>
+    </tr>
+</table>
+<div class="back">
+    <!-- 添加回到首页的链接 -->
+    <a href="/">回到首页</a>
+</div>
+</body>
+<script>
+    document.getElementById('gm').addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止表单默认提交行为
+
+        var url = 'http://{{.HTTPSERVER}}/gm/GMScript?' + new URLSearchParams(new FormData(this)).toString();
+
+        // 发起AJAX GET请求
+        fetch(url)
+        // fetch(url, {
+        //     method: 'GET',
+        //     headers: {
+        //         'mimetype': 'js',
+        //         // 其他需要的头部
+        //     }
+        // })
+        .then(response => {
+            console.log(response)
+            return response.json()
+        })
+        .then(data => {
+            console.log(data)
+            alert('message: ' + data.message); // 使用alert显示结果
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    document.getElementById('user').addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止表单默认提交行为
+
+        var url = 'http://{{.HTTPSERVER}}/gm/GMOtherScript?' + new URLSearchParams(new FormData(this)).toString();
+
+        // 发起AJAX GET请求
+        fetch(url)
+        // fetch(url, {
+        //     method: 'GET',
+        //     headers: {
+        //         'mimetype': 'js',
+        //         // 其他需要的头部
+        //     }
+        // })
+        .then(response => {
+            console.log(response)
+            return response.json()
+        })
+        .then(data => {
+            console.log(data.message)
+            // alert(data.message)
+            // 构建第二个GET请求的URL，假设URL和参数如下
+            var secondUrl = '/user';
+            var params = new URLSearchParams(data.message).toString(); // 将data作为查询参数
+            var fullUrl = secondUrl + '?message=' + params;
+
+            // 发起第二个GET请求
+            return fetch(fullUrl);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+    document.getElementById('baseInfo').addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止表单默认提交行为
+
+        var url = 'http://{{.HTTPSERVER}}/gm/GMOtherScript?' + new URLSearchParams(new FormData(this)).toString();
+
+        // 发起AJAX GET请求
+        fetch(url)
+        // fetch(url, {
+        //     method: 'GET',
+        //     headers: {
+        //         'mimetype': 'js',
+        //         // 其他需要的头部
+        //     }
+        // })
+        .then(response => {
+            console.log(response)
+            return response.json()
+        })
+        .then(data => {
+            console.log(data.message)
+            // alert(data.message)
+            // 构建第二个GET请求的URL，假设URL和参数如下
+            var secondUrl = '/player';
+            var params = new URLSearchParams(data.message).toString(); // 将data作为查询参数
+            var fullUrl = secondUrl + '?message=' + params.substring(0, params.length-1);
+
+            // 发起第二个GET请求，并在完成后跳转
+            fetch(fullUrl)
+                .then(response => {
+                    // 假设此处我们不再关心第二个请求的具体响应内容
+                    // 直接跳转到目标页面，这里我们使用window.location
+                    window.location.href = fullUrl; // 修改当前页面地址，实现跳转
+                });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>玩家数据查询</title>
+</head>
+<body>
+<h1>玩家数据查询</h1>
+<form>
+    <label for="uid">请输入玩家UID：</label>
+    <input type="text" id="uid" name="uid">
+    <button type="submit">查询</button>
+</form>
+<div id="result" style="padding-top:20px; display: flex; flex-direction: column;">
+    <a>玩家id： {{.Id}}</a>
+    <a>玩家accId： {{.AccId}}</a>
+    <a>玩家名字： {{.Name}}</a>
+    <a>玩家大本等级： {{.MainBuildingLevel}}</a>
+    <a>玩家vip等级： {{.VipLevel}}</a>
+    <a>玩家上次登陆时间： {{.LastOnlineTime}}</a>
+    <a>玩家金币： {{.Coin}}</a>
+    <a>玩家联盟ID： {{.AllianceId}}</a>
+    <a>玩家钻石： {{.Diamond}}</a>
+    <a>玩家战力： {{.Power}}</a>
+</div>
+
+<!--<script>-->
+<!--    const form = document.querySelector('form');-->
+<!--    const resultDiv = document.getElementById('result');-->
+
+<!--    form.addEventListener('submit', async (e) => {-->
+<!--        e.preventDefault();-->
+
+<!--        const uid = document.getElementById('uid').value;-->
+<!--        const response = await fetch(`/api/player?uid=${uid}`);-->
+<!--        const data = await response.json();-->
+
+<!--        // 处理返回的玩家数据-->
+<!--        if (data.error) {-->
+<!--            resultDiv.innerText = `查询失败：${data.error}`;-->
+<!--        } else {-->
+<!--            const player = data.player;-->
+<!--            resultDiv.innerHTML = `-->
+<!--                    <h2>个人信息</h2>-->
+<!--                    <p>昵称：${player.nickname}</p>-->
+<!--                    <p>等级：${player.level}</p>-->
+<!--                    <p>联盟：${player.alliance}</p>-->
+
+<!--                    <h2>英雄</h2>-->
+<!--                    <ul>-->
+<!--                        ${player.heroes.map(hero => `<li>${hero.name}</li>`).join('')}-->
+<!--                    </ul>-->
+
+<!--                    <h2>士兵</h2>-->
+<!--                    <ul>-->
+<!--                        ${player.soldiers.map(soldier => `<li>${soldier.name}</li>`).join('')}-->
+<!--                    </ul>-->
+
+<!--                    <h2>道具</h2>-->
+<!--                    <ul>-->
+<!--                        ${player.items.map(item => `<li>${item.name}</li>`).join('')}-->
+<!--                    </ul>-->
+<!--                `;-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>
